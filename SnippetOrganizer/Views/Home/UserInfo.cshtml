@@ -1,0 +1,80 @@
+﻿@model SnippetOrganizer.Ui.Models.UserInfoViewModel
+
+@{
+   ViewData["Title"] = "UseInfo";
+}
+
+<h1 class="text-info">User Information</h1>
+<br />
+<h2>Credentials</h2>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="Login"></label>
+   </div>
+   <div class="col-sm-4">
+      @{ if (@Model.AuthenticationType == Octokit.AuthenticationType.Anonymous)
+         {
+            <input class="form-control" type="text" value="Anonymous" readonly />
+         }
+         else
+         {
+            <input class="form-control" type="text" asp-for="Login" readonly />
+         }
+      }
+   </div>
+</div>
+
+<br />
+<h2>Search Rates</h2>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="SearchRatePerMinute"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="SearchRatePerMinute" readonly />
+   </div>
+</div>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="SearchRequestsRemaining"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="SearchRequestsRemaining" readonly />
+   </div>
+</div>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="SearchLimitReset"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="SearchLimitReset" readonly />
+   </div>
+</div>
+
+<br />
+<h2>Core Rates</h2>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="CoreRatePerHour"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="CoreRatePerHour" readonly />
+   </div>
+</div>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="CoreRequestsRemaining"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="CoreRequestsRemaining" readonly />
+   </div>
+</div>
+<div class="row">
+   <div class="col-sm-3 text-right">
+      <label class="form-label" asp-for="CoreLimitReset"></label>
+   </div>
+   <div class="col-sm-4">
+      <input class="form-control" type="text" asp-for="CoreLimitReset" readonly />
+   </div>
+</div>
+
