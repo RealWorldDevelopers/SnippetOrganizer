@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Octokit;
 using SnippetOrganizer.Ui;
+using System;
 
 namespace SnippetOrganizer
 {
@@ -35,6 +37,18 @@ namespace SnippetOrganizer
          // DTO Factories
          services.AddTransient<Business.Snippet.Dto.IFactory, Business.Snippet.Dto.Factory>();
 
+         // GitHub client
+         services.AddTransient( x=> new GitHubClient(new ProductHeaderValue(appSettings.GitHubConfig.ProductHeader)));
+
+         // enable sessions
+         services.AddDistributedMemoryCache();
+         services.AddSession(options =>
+         {
+            //options.IdleTimeout = TimeSpan.FromSeconds(10); // default is 20 min
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+         });
+
          services.AddControllersWithViews();         
       }
 
@@ -53,11 +67,14 @@ namespace SnippetOrganizer
          }       
 
          app.UseHttpsRedirection();
-         app.UseStaticFiles();
+         app.UseStaticFiles();     
 
          app.UseRouting();
 
          app.UseAuthorization();
+
+         // enable session
+         app.UseSession();
 
          app.UseEndpoints(endpoints =>
          {

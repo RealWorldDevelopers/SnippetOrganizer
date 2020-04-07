@@ -12,10 +12,7 @@ namespace SnippetOrganizer.Ui
    }
 
    public class GitHubConfig
-   {
-      public string OAuthToken { get; set; }
-      public string State { get; set; }
-      public string ReturnUrl { get; set; }
+   {     
       public string ClientId { get; set; }
       public string ClientSecret { get; set; }
       public string ProductHeader { get; set; }
