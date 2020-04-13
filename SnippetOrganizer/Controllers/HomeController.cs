@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Octokit;
+using RWD.Toolbox.PasswordGenerator;
 using SnippetOrganizer.Models;
 using SnippetOrganizer.Ui;
 using SnippetOrganizer.Ui.Models;
@@ -23,13 +24,20 @@ namespace SnippetOrganizer.Controllers
       private readonly string _clientId;
       private readonly string _clientSecret;
       private readonly GitHubClient _gitClient;
+      private IPasswordGenerator _pwdGenerator;
 
-      public HomeController(GitHubClient gitClient, IOptions<AppSettings> appSettings)
-      {
+      public HomeController(GitHubClient gitClient, IOptions<AppSettings> appSettings, IPasswordGenerator passwordGenerator)
+      {         
          _appSettings = appSettings.Value;
+
+         // TODO move get snippet logic to business         
+
+         _pwdGenerator = passwordGenerator;
+
          _clientId = _appSettings.GitHubConfig.ClientId;
          _clientSecret = _appSettings.GitHubConfig.ClientSecret;
          _gitClient = gitClient;
+
       }
 
 
@@ -147,7 +155,7 @@ namespace SnippetOrganizer.Controllers
 
       private bool SetClientCredentials()
       {
-         var accessToken = HttpContext.Session.GetString("OAuthToken"); 
+         var accessToken = HttpContext.Session.GetString("OAuthToken");
          if (accessToken != null)
          {
             // This allows the client to make requests to the GitHub API on the user's behalf without ever having the user's OAuth credentials.
@@ -176,15 +184,12 @@ namespace SnippetOrganizer.Controllers
             HttpContext.Session.SetString("OAuthToken", token.AccessToken);
          }
 
-         return RedirectToAction(HttpContext.Session.GetString("ReturnUrl")); 
+         return RedirectToAction(HttpContext.Session.GetString("ReturnUrl"));
       }
 
       private string GetOauthLoginUrl()
       {
-         // TODO use RWD NuGet Package
-         var pwg = new PasswordGenerator();
-
-         string csrf = pwg.Generate(24);
+         string csrf = _pwdGenerator.Generate(24);
          HttpContext.Session.SetString("CSRF:State", csrf);
 
          // Redirect users to request GitHub access

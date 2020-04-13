@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Octokit;
+using RWD.Toolbox.PasswordGenerator;
 using SnippetOrganizer.Ui;
 using System;
 
@@ -36,6 +37,9 @@ namespace SnippetOrganizer
 
          // DTO Factories
          services.AddTransient<Business.Snippet.Dto.IFactory, Business.Snippet.Dto.Factory>();
+
+         // Password Generator
+         services.AddTransient<IPasswordGenerator, PasswordGenerator>();
 
          // GitHub client
          services.AddTransient( x=> new GitHubClient(new ProductHeaderValue(appSettings.GitHubConfig.ProductHeader)));
