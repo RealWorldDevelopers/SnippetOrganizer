@@ -17,8 +17,8 @@ namespace SnippetOrganizer.Business.Shared
       /// <summary>
       /// Query a specific record by primary key
       /// </summary>
-      /// <param name="id">Primary Key as <see cref="int"/></param>
-      T Execute(int id);
+      /// <param name="id">Primary Key as <see cref="object"/></param>
+      T Execute(object id);
 
       /// <summary>
       /// Asynchronously query all Data
@@ -28,7 +28,8 @@ namespace SnippetOrganizer.Business.Shared
       /// <summary>
       /// Asynchronously query a specific record by primary key
       /// </summary>
-      /// <param name="id">Primary Key as <see cref="int"/></param>
-      Task<T> ExecuteAsync(int id);
+      /// <param name="id">Primary Key as <see cref="object"/></param>
+      Task<T> ExecuteAsync(object id);
+
    }
 }

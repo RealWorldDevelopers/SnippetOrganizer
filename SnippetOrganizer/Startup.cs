@@ -28,16 +28,7 @@ namespace SnippetOrganizer
 
          // app config settings
          services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
-
-         // Query Factories
-         services.AddTransient<Business.Snippet.Queries.IFactory, Business.Snippet.Queries.Factory>();
-
-         // Command Factories
-         services.AddTransient<Business.Snippet.Commands.IFactory, Business.Snippet.Commands.Factory>();
-
-         // DTO Factories
-         services.AddTransient<Business.Snippet.Dto.IFactory, Business.Snippet.Dto.Factory>();
-
+               
          // Password Generator
          services.AddTransient<IPasswordGenerator, PasswordGenerator>();
 

@@ -9,7 +9,8 @@ namespace SnippetOrganizer.Business.Snippet.Queries
    {
       public GetSnippets CreateSnippetsQuery()
       {
-         return new GetSnippets();
+         return null;
+         //return new GetSnippets();
       }
    }
 }

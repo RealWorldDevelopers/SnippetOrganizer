@@ -1,0 +1,36 @@
+﻿@model SnippetOrganizer.Ui.Models.GistsViewModel
+
+<div class="card">
+   <div class="card-header">
+      <h1>@ViewData["Title"]</h1>
+   </div>
+   <div class="card-body">
+      <div>
+         <div>
+            <label class="d-none d-md-block">
+               <input class="form-control" type="search" placeholder="Search for ..." id="gistSearch" />
+            </label>
+         </div>
+         <ul class="list-group-flush" id="ulGists">            
+
+            @foreach (var gist in Model.Gists)
+            {
+               <li class="list-group-item">
+                  <partial name="_GistListItem" model="gist" />
+               </li>
+            }
+
+         </ul>
+
+      </div>
+
+   </div>
+   <div class="card-footer bg-secondary text-light"></div>
+</div>
+
+
+@section Scripts{
+   @*<script src="~/js/recipe.min.js" asp-append-version="true" type="text/javascript"></script>*@
+}
+
+
