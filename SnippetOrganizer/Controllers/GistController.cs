@@ -49,18 +49,31 @@ namespace SnippetOrganizer.Ui.Controllers
                   Public = g.Public,
                   GitHubLink = new Uri(g.HtmlUrl)
                };
+
                foreach (var f in g.Files)
                {
-                  // TODO no dupes
-                  gist.Languages.Add(f.Value.Language);
+                  // no dupes for display only
+                  if (!gist.Languages.Contains(f.Value.Language))
+                     gist.Languages.Add(f.Value.Language);
+
+                  // content not null only on singe gist retrieval
+                  var file = new FileViewModel
+                  {
+                     RawUrl = new Uri(f.Value.RawUrl),
+                     FileName = f.Value.Filename,
+                     Language = f.Value.Language,
+                     Type = f.Value.Type
+                  };
+                  gist.Files.Add(file);
                }
 
+               gist.Languages.Sort();
                model.Gists.Add(gist);
             }
 
             return View(model);
 
-         }        
+         }
          catch (RateLimitExceededException)
          {
             // User Has Exceeded Rate Limits

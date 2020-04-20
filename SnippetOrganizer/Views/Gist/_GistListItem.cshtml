@@ -2,4 +2,17 @@
 @{
    // TODO Show more Data like [Languages, keywords, public]
 }
-<a href="@Model.GitHubLink">@Model.Description</a>
+
+@foreach (var lang in Model.Languages)
+{
+   <span class="badge badge-secondary"> @lang</span>
+}
+<a href="@Model.GitHubLink">
+   <h2>
+      @Model.Description
+   </h2>
+</a>
+@foreach (var file in Model.Files)
+{
+   <a href="@file.RawUrl">@file.FileName</a><span>&nbsp;</span>
+}
